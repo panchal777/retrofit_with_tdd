@@ -7,7 +7,18 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    GeneratedPluginRegistrant.register(withRegistry: self)
+
+     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
+                let mlkitChannel = FlutterMethodChannel(name: "com.demo.methodchannel",
+                                                          binaryMessenger: controller.binaryMessenger)
+            mlkitChannel.setMethodCallHandler({
+                  (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+                if call.method == "messageFunction"{
+                result("Message From Ios")
+                }
+             })
+      return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+
   }
 }
